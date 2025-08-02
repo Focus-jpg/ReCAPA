@@ -1,0 +1,159 @@
+# AlfWorld Configuration
+env:
+  goal_desc_human_anns_prob: 0.0
+  task_types: [1, 2, 3, 4, 5, 6]
+
+dataset:
+  data_path: "~/alfworld/data/train"
+  eval_id_data_path: "~/alfworld/data/eval_in_distribution"
+  eval_ood_data_path: "~/alfworld/data/eval_out_of_distribution"
+  num_train_games: 1000
+
+environment_type: "alfworld"
+data_root: "~/alfworld"
+split: "train"
+no_graphics: true
+time_scale: 1.0
+max_steps: 100
+seed: 42
+
+# Agent Configuration
+num_agents: 1
+state_dim: 512
+action_dim: 20
+hidden_dim: 128
+sub_len: 10
+num_episodes: 1000
+max_steps: 100
+lr: 0.0003
+gamma: 0.99
+logprob_threshold: -5.0
+
+# LLM Configuration
+llm_api_key: "sk-a2a988f5b382463fa8c427c1d8b74d84"
+llm_api_base: "https://api.openai.com/v1"
+llm_model_name: "gpt-4o"
+
+# Transformer Configuration
+num_heads: 8
+
+# Alignment parameters
+sinkhorn_eps: 0.1
+lambda_sinkhorn_start: 0.0
+lambda_sinkhorn_end: 0.1
+lambda_score_start: 0.0
+lambda_score_end: 0.1
+warmup_episodes: 100
+score_hidden: 256
+
+# Training Configuration
+eval_interval: 20
+save_dir: "results/models/alfworld"
+
+# HPCR Configuration
+enable_hpcr: true
+zero_shot_mode: true
+zero_shot_adaptation:
+  enabled: true
+  rapid_adaptation_lr: 1e-3
+  meta_learning_rate: 5e-4
+  adaptation_steps: 5
+  dynamic_prompt_update: true
+  online_prompt_learning: true
+
+# HPCR temperatures
+hpcr_temperatures:
+  low: 0.1
+  mid: 0.15
+  high: 0.2
+
+# HPCR prediction weights
+hpcr_pred_weights:
+  low: 1.0
+  mid: 0.8
+  high: 0.6
+
+# HPCR prediction head
+hpcr_prediction_head:
+  hidden_dim: 256
+  num_layers: 2
+  dropout: 0.1
+
+# HPCR failure sampling
+hpcr_failure_sampling:
+  enabled: true
+  gpt4_model: "gpt-4o"
+  failure_sample_ratio: 0.3
+  generation_interval: 10
+
+# HPCR hard negatives
+hpcr_hard_negatives:
+  enabled: true
+  hard_negative_ratio: 0.5
+  mining_strategy: "cosine_similarity"
+
+# HPCR trajectory slicing
+hpcr_trajectory_slicing:
+  low_span: 10
+  mid_span: 50
+  high_span: -1
+
+# HPCR gradient fusion
+hpcr_gradient_fusion:
+  fusion_method: "weighted_sum"
+  fusion_weights:
+    low: 0.5
+    mid: 0.3
+    high: 0.2
+
+# HPCR MINE
+hpcr_mine:
+  enabled: true
+  mine_hidden_dim: 128
+  mine_lr: 1e-4
+
+# HPCR advanced settings
+hpcr_advanced:
+  use_shared_encoder: true
+  use_cross_level_attention: true
+  stability_regularization: 0.01
+
+# AlfWorld specific settings
+alfworld_settings:
+  task_types:
+    - "pick_and_place_simple"
+    - "pick_clean_then_place_in_recep"
+    - "pick_heat_then_place_in_recep"
+    - "pick_cool_then_place_in_recep"
+    - "pick_two_obj_and_place"
+    - "look_at_obj_in_light"
+    - "pick_and_place_with_movable_recep"
+  
+  action_mapping:
+    0: "look"
+    1: "move"
+    2: "pick"
+    3: "put"
+    4: "open"
+    5: "close"
+    6: "toggle"
+    7: "heat"
+    8: "cool"
+    9: "clean"
+    10: "slice"
+    11: "examine"
+    12: "use"
+    13: "find"
+    14: "go to"
+    15: "take"
+    16: "place"
+    17: "turn on"
+    18: "turn off"
+    19: "break"
+  
+  reward_structure:
+    task_completion: 10.0
+    successful_action: 1.0
+    failed_action: -0.1
+    step_penalty: -0.01
+    exploration_bonus: 0.1 

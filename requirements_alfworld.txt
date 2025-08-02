@@ -1,0 +1,35 @@
+# AlfWorld依赖包
+alfworld>=1.4.0
+ai2thor>=4.0.0
+
+# 基础依赖
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.21.0
+gymnasium>=0.28.0
+pettingzoo>=1.22.0
+
+# 文本处理
+transformers>=4.20.0
+tokenizers>=0.13.0
+
+# 图像处理
+Pillow>=9.0.0
+opencv-python>=4.6.0
+
+# 配置和日志
+pyyaml>=6.0
+tqdm>=4.64.0
+tensorboard>=2.10.0
+
+# 科学计算
+scipy>=1.9.0
+scikit-learn>=1.1.0
+
+# 可视化
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# 其他工具
+requests>=2.28.0
+pandas>=1.4.0 

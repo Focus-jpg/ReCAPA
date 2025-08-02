@@ -1,0 +1,175 @@
+# 反思层数消融实验配置
+# 验证多层级设计是否显著优于浅层结构
+
+# 基础配置（全三层）
+baseline_hierarchical:
+  enable_hpcr: true
+  reflection_levels: ["low", "mid", "high"]
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    low: 0.1
+    mid: 0.15
+    high: 0.2
+  hpcr_pred_weights:
+    low: 1.0
+    mid: 0.8
+    high: 0.6
+
+# 1. 无反思
+no_reflection_hierarchical:
+  enable_hpcr: false
+  enable_reflection: false
+  reflection_levels: []
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 0.0
+  mid_level_interval: 5
+  high_level_interval: 10
+
+# 2. 单层反思 - 低层
+single_low_level:
+  enable_hpcr: true
+  reflection_levels: ["low"]
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 0.0
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    low: 0.1
+  hpcr_pred_weights:
+    low: 1.0
+
+# 3. 单层反思 - 中层
+single_mid_level:
+  enable_hpcr: true
+  reflection_levels: ["mid"]
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 1.0
+  lambda_contrastive_high: 0.0
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    mid: 0.15
+  hpcr_pred_weights:
+    mid: 1.0
+
+# 4. 单层反思 - 高层
+single_high_level:
+  enable_hpcr: true
+  reflection_levels: ["high"]
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 1.0
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    high: 0.2
+  hpcr_pred_weights:
+    high: 1.0
+
+# 5. 双层反思 - 低+中
+low_mid_level:
+  enable_hpcr: true
+  reflection_levels: ["low", "mid"]
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.0
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    low: 0.1
+    mid: 0.15
+  hpcr_pred_weights:
+    low: 1.0
+    mid: 0.8
+
+# 6. 双层反思 - 低+高
+low_high_level:
+  enable_hpcr: true
+  reflection_levels: ["low", "high"]
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 0.2
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    low: 0.1
+    high: 0.2
+  hpcr_pred_weights:
+    low: 1.0
+    high: 0.6
+
+# 7. 双层反思 - 中+高
+mid_high_level:
+  enable_hpcr: true
+  reflection_levels: ["mid", "high"]
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    mid: 0.15
+    high: 0.2
+  hpcr_pred_weights:
+    mid: 0.8
+    high: 0.6
+
+# 8. 不同权重配置实验
+weight_ablation_1:
+  enable_hpcr: true
+  reflection_levels: ["low", "mid", "high"]
+  lambda_contrastive_low: 0.5
+  lambda_contrastive_mid: 1.0
+  lambda_contrastive_high: 0.3
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    low: 0.1
+    mid: 0.15
+    high: 0.2
+  hpcr_pred_weights:
+    low: 0.5
+    mid: 1.0
+    high: 0.8
+
+# 9. 不同频率配置实验
+frequency_ablation:
+  enable_hpcr: true
+  reflection_levels: ["low", "mid", "high"]
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+  mid_level_interval: 3  # 更频繁的中层反思
+  high_level_interval: 5  # 更频繁的高层反思
+  hpcr_temperatures:
+    low: 0.1
+    mid: 0.15
+    high: 0.2
+  hpcr_pred_weights:
+    low: 1.0
+    mid: 0.8
+    high: 0.6
+
+# 10. 不同温度配置实验
+temperature_ablation_hierarchical:
+  enable_hpcr: true
+  reflection_levels: ["low", "mid", "high"]
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+  mid_level_interval: 5
+  high_level_interval: 10
+  hpcr_temperatures:
+    low: 0.05  # 更低的温度
+    mid: 0.1
+    high: 0.15
+  hpcr_pred_weights:
+    low: 1.0
+    mid: 0.8
+    high: 0.6 

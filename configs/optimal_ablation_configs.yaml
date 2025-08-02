@@ -1,0 +1,86 @@
+# Optimal Ablation 实验配置
+# 基于重要性排序的消融实验
+
+# 1. 基于梯度重要性的消融
+gradient_based_ablation:
+  ablation_strategy: "gradient_importance"
+  importance_metrics: ["gradient_norm", "gradient_flow", "parameter_sensitivity"]
+  ablation_order: ["alignment", "hpcr", "reflection", "cgf"]
+  gradient_threshold: 0.01
+  importance_window: 100  # episodes
+
+# 2. 基于性能贡献的消融
+performance_based_ablation:
+  ablation_strategy: "performance_contribution"
+  performance_metrics: ["task_success_rate", "alignment_accuracy", "convergence_speed"]
+  contribution_threshold: 0.05
+  evaluation_interval: 50  # episodes
+  ablation_order: ["score_field", "sinkhorn", "hpcr_prediction", "hierarchical_reflection"]
+
+# 3. 基于互信息的消融
+mutual_info_ablation:
+  ablation_strategy: "mutual_information"
+  mi_estimator: "mine"
+  mi_threshold: 0.1
+  ablation_order: ["prompt_trajectory_mi", "level_hierarchy_mi", "alignment_mi"]
+  mine_hidden_dim: 128
+  mine_lr: 1e-4
+
+# 4. 渐进式消融（从最重要到最不重要）
+progressive_ablation:
+  ablation_strategy: "progressive"
+  ablation_steps: [
+    {"step": 1, "remove": "score_field", "reason": "highest_performance_impact"},
+    {"step": 2, "remove": "hpcr_prediction", "reason": "high_gradient_importance"},
+    {"step": 3, "remove": "sinkhorn", "reason": "medium_alignment_contribution"},
+    {"step": 4, "remove": "hierarchical_reflection", "reason": "low_level_impact"},
+    {"step": 5, "remove": "cgf", "reason": "minimal_gradient_flow"}
+  ]
+  evaluation_period: 100  # episodes per step
+
+# 5. 自适应消融（基于在线性能）
+adaptive_ablation:
+  ablation_strategy: "adaptive"
+  adaptation_window: 200  # episodes
+  performance_threshold: 0.1  # 性能下降阈值
+  ablation_candidates: ["score_field", "sinkhorn", "hpcr", "reflection", "cgf"]
+  restoration_enabled: true  # 允许恢复被移除的组件
+
+# 6. 多目标消融（同时考虑多个指标）
+multi_objective_ablation:
+  ablation_strategy: "multi_objective"
+  objectives: ["task_performance", "alignment_quality", "computational_efficiency"]
+  objective_weights: [0.5, 0.3, 0.2]
+  pareto_optimal_selection: true
+  ablation_order: ["pareto_dominated", "pareto_frontier"]
+
+# 7. 基于不确定性的消融
+uncertainty_based_ablation:
+  ablation_strategy: "uncertainty"
+  uncertainty_metrics: ["prediction_variance", "confidence_intervals", "ensemble_disagreement"]
+  uncertainty_threshold: 0.15
+  ablation_order: ["high_uncertainty_first", "low_uncertainty_last"]
+  ensemble_size: 5
+
+# 8. 基于稳定性的消融
+stability_based_ablation:
+  ablation_strategy: "stability"
+  stability_metrics: ["loss_variance", "gradient_norm_stability", "parameter_drift"]
+  stability_window: 150  # episodes
+  ablation_order: ["unstable_components_first", "stable_components_last"]
+  stability_threshold: 0.1
+
+# 9. 基于可解释性的消融
+interpretability_ablation:
+  ablation_strategy: "interpretability"
+  interpretability_metrics: ["attention_weights", "gradient_attribution", "feature_importance"]
+  ablation_order: ["low_interpretability_first", "high_interpretability_last"]
+  attribution_method: "integrated_gradients"
+
+# 10. 组合策略消融
+combined_ablation:
+  ablation_strategy: "combined"
+  strategies: ["gradient_importance", "performance_contribution", "mutual_information"]
+  strategy_weights: [0.4, 0.4, 0.2]
+  combined_threshold: 0.08
+  ablation_order: ["weighted_importance_ranking"] 

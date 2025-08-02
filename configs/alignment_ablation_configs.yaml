@@ -1,0 +1,112 @@
+# 对齐机制消融实验配置
+# 比较不同对齐loss的效果差异
+
+# 基础配置（完整对齐）
+baseline_alignment:
+  alignment_methods: ["infonce", "sinkhorn", "score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 1. 仅InfoNCE对齐
+infonce_only:
+  alignment_methods: ["infonce"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.0
+  lambda_score_start: 0.0
+  lambda_score_end: 0.0
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 2. 仅Sinkhorn对齐
+sinkhorn_only:
+  alignment_methods: ["sinkhorn"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.0
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 3. 仅Score Field对齐
+score_field_only:
+  alignment_methods: ["score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.0
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 4. InfoNCE + Sinkhorn
+infonce_sinkhorn:
+  alignment_methods: ["infonce", "sinkhorn"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.0
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 5. InfoNCE + Score Field
+infonce_score_field:
+  alignment_methods: ["infonce", "score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.0
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 6. Sinkhorn + Score Field
+sinkhorn_score_field:
+  alignment_methods: ["sinkhorn", "score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 7. 不同温度参数实验
+temperature_ablation:
+  alignment_methods: ["infonce", "sinkhorn", "score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.05  # 更低的温度
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 8. 不同Sinkhorn epsilon实验
+sinkhorn_epsilon_ablation:
+  alignment_methods: ["infonce", "sinkhorn", "score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.05  # 更低的epsilon
+  score_field_sigmas: [0.1, 0.5, 1.0]
+
+# 9. 不同Score Field sigma实验
+score_field_sigma_ablation:
+  alignment_methods: ["infonce", "sinkhorn", "score_field"]
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  infonce_temperature: 0.1
+  sinkhorn_epsilon: 0.1
+  score_field_sigmas: [0.05, 0.25, 0.5]  # 更小的sigma范围 

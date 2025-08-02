@@ -1,0 +1,127 @@
+# 消融实验配置文件
+# 用于系统性地测试各个模块的贡献
+
+# 基础配置（完整系统）
+baseline:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+
+# 1. 无反思模块消融
+no_reflection:
+  enable_hpcr: false
+  enable_reflection: false
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 0.0
+
+# 2. 无对齐loss消融
+no_alignment:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: false
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.0
+  lambda_score_start: 0.0
+  lambda_score_end: 0.0
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+
+# 3. 单层反思消融
+single_level_low:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 0.0
+
+single_level_mid:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 1.0
+  lambda_contrastive_high: 0.0
+
+single_level_high:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 0.0
+  lambda_contrastive_mid: 0.0
+  lambda_contrastive_high: 1.0
+
+# 4. 无prompt-to-trajectory消融
+no_prompt_trajectory:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: false
+  enable_prompt_trajectory: false
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.0
+  lambda_score_start: 0.0
+  lambda_score_end: 0.0
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+
+# 5. 无HPCR消融
+no_hpcr:
+  enable_hpcr: false
+  enable_reflection: true
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2
+
+# 6. 无CGF消融
+no_cgf:
+  enable_hpcr: true
+  enable_reflection: true
+  enable_alignment: true
+  enable_prompt_trajectory: true
+  enable_cgf: false
+  lambda_sinkhorn_start: 0.0
+  lambda_sinkhorn_end: 0.1
+  lambda_score_start: 0.0
+  lambda_score_end: 0.1
+  lambda_contrastive_low: 1.0
+  lambda_contrastive_mid: 0.5
+  lambda_contrastive_high: 0.2 
